@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Object Detector</title>
+</head>
+<body>
+    <div style="display: flex; justify-content: center; align-items: center;">
+        <div style="border: 1px solid green; margin-top: 30vh; padding: 100px;">
+            <h2>Simple Object Detector</h2>
+            <p>Upload an <mark>image</mark> (preferably with decent quality and is 1920x1080 in size), click Upload and <strong>voila!</strong></p>
+            <form action="/upload" enctype="multipart/form-data" method="post">
+                <input type="file" name="photo" accept="image/x-png,image/jpeg" />
+                <input type="submit" value="Upload, analyze and show me the result!" />
+            </form>
+        </div>
+    </div>
+    <div style="position: absolute; bottom: 0; left: 0; right: 0; text-align: center; margin-bottom: 150px;">
+        <code>Made with ❤ by <a href="https://github.com/TonyInfinity/" target="__blank">Tony Quach</a></code>
+    </div>
+</body>
+</html>
