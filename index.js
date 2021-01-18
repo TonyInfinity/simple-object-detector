@@ -3,7 +3,6 @@ const path = require("path");
 const AWS = require("aws-sdk");
 const cors = require("cors");
 const { createCanvas, loadImage } = require("canvas");
-const fs = require("fs");
 const fileUpload = require("express-fileupload");
 
 const PORT = process.env.PORT || 5000;
@@ -14,14 +13,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(fileUpload());
 
-const awsRegion = "us-east-1";
-const bucket = "";
-const localFolderPath = "";
+const awsRegion = process.env.AWS_REGION;
+const bucket = process.env.BUCKET;
+const localFolderPath = process.env.LOCAL_FOLDER_PATH;
 var photo = "";
 const imgWidth = 1920;
 const imgHeight = 1080;
 const boxColor = "#FFFF00";
-const nameColor = "#3574D4";
+const nameColor = "#FF0000";
 const nameStyle = "bold 20pt Menlo";
 const maxLabels = 10;
 const minConfidence = 90;
@@ -88,7 +87,7 @@ app.get("/analyzed", (req, res) => {
         });
 
         res.send(
-          `<div style="display:grid;height:100%"><img src="${canvas.toDataURL()}" style="max-width:100%;max-height:100vh;margin:auto;" /></div>`
+          `<div><h4>Here's what we detected 🔎</h4><div style="display:grid;height:80vh;border: 3px dashed blue"><img src="${canvas.toDataURL()}" style="max-width:100%;max-height:80vh;margin:auto;border: 3x dashed red" /></div></div>`
         );
       });
     }

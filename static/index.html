@@ -1,23 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Object Detector</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Object Detector</title>
+  <link href="https://unpkg.com/normalize.css@^7.0.0" rel="stylesheet" />
+  <link href="https://unpkg.com/@blueprintjs/icons@^3.4.0/lib/css/blueprint-icons.css" rel="stylesheet" />
+  <link href="https://unpkg.com/@blueprintjs/core@^3.10.0/lib/css/blueprint.css" rel="stylesheet" />
+  <link class="jsbin" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css" rel="stylesheet"
+    type="text/css" />
+  <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+  <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-    <div style="display: flex; justify-content: center; align-items: center;">
-        <div style="border: 1px solid green; margin-top: 30vh; padding: 100px;">
-            <h2>Simple Object Detector</h2>
-            <p>Upload an <mark>image</mark> (preferably with decent quality and is 1920x1080 in size), click Upload and <strong>voila!</strong></p>
-            <form action="/upload" enctype="multipart/form-data" method="post">
-                <input type="file" name="photo" accept="image/x-png,image/jpeg" />
-                <input type="submit" value="Upload, analyze and show me the result!" />
-            </form>
-        </div>
+  <nav class="bp3-navbar">
+    <div class="bp3-navbar-group bp3-align-left">
+      <div class="bp3-navbar-heading">Simple Object Detector 🔎</div>
     </div>
-    <div style="position: absolute; bottom: 0; left: 0; right: 0; text-align: center; margin-bottom: 150px;">
-        <code>Made with ❤ by <a href="https://github.com/TonyInfinity/" target="__blank">Tony Quach</a></code>
+    <div class="bp3-navbar-group bp3-align-right">
+      <a href="https://github.com/TonyInfinity/simple-object-detector" class="bp3-button bp3-minimal bp3-icon-git-repo" target="__blank">Github</a>
+  </nav>
+  <div style="margin: 50px 350px 0px;"><img id="preview" style="border: 2px dashed blue" width="100%" height="500px" />
+  </div>
+  <div class="bp3-card" style="margin: 0 350px">
+    <div class="bp3-text-large">
+      Object Detector 🔎
     </div>
+    <div class="bp3-text-muted">
+      Make sure it's an image file with decent size and quality
+    </div>
+    </br>
+    <div style="display: flex">
+      <button id="uploadbtn" type="button" class="bp3-button bp3-icon-cloud-upload" style="margin-right: 15px"
+        onclick="handleTriggerFileInput()">Upload an image</button>
+      <form action="/upload" enctype="multipart/form-data" method="post">
+        <input id="fileinput" type="file" name="photo" accept="image/x-png,image/jpeg" onchange={readImage(this)}
+          hidden />
+        <button id="analyzebtn" style="display: none" class="bp3-button bp3-icon-eye-open" type="submit"
+          onclick={handleAnalyze()}>Analyze</button>
+    </div>
+    </form>
+  </div>
+  <div style="position: absolute; bottom: 0; left: 0; right: 0; text-align: center; margin-bottom: 85px">
+    <code>Made with ❤️ by <a href="https://github.com/TonyInfinity/" target="__blank">Tony Quach</a></code>
+  </div>
+  <script>
+    function handleTriggerFileInput() {
+      document.getElementById("fileinput").click();
+    }
+    function handleAnalyze() {
+      setTimeout(() => {
+        document.getElementById("uploadbtn").disabled = "true";
+        document.getElementById("analyzebtn").disabled = "true";
+        document.getElementById("analyzebtn").classList.remove("bp3-icon-eye-open");
+        document.getElementById("analyzebtn").innerHTML = `<i class="fa fa-circle-o-notch fa-spin"></i> Analyze`;
+      }, 100)
+    }
+    function readImage(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $('#preview')
+            .attr('src', e.target.result);
+          $('#analyzebtn').css('display', 'block');
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+  </script>
 </body>
 </html>
